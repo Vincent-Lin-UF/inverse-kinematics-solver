@@ -1,12 +1,13 @@
-<script lang="ts">
-  const API = "/api/close-loop"; 
+<script>
+  const API =
+    (import.meta.env.DEV ? 'http://localhost:3000' : '') + '/api/close-loop';
 
   let P_tool_6 = [25, 23, 24];
   let P_tool_f = [0.177, 0.884, -0.433];
   let S6_f     = [-0.153, 0.459, 0.875];
   let a67_f    = [-0.153, 0.459, 0.875];
 
-  let out: any = null;
+  let out = null;
   let loading = false;
   let err = "";
 
@@ -20,8 +21,8 @@
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       out = await res.json();
-    } catch (e: any) {
-      err = e?.message ?? String(e);
+    } catch (e) {
+      err = (e && e.message) ? e.message : String(e);
     } finally {
       loading = false;
     }
